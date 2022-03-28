@@ -3,6 +3,7 @@ package entidades;
 public class Veiculo {
   private int id;
   private String modelo;
+
   private int anoDeFabricacao;
   private Double autonomia;
 
@@ -10,6 +11,11 @@ public class Veiculo {
     this.modelo = modelo;
     this.anoDeFabricacao = anoDeFabricacao;
     this.autonomia = autonomia;
+  }
+
+  @Override
+  public String toString() {
+    return "Modelo: " + modelo + "; Ano de Fabricação: " + anoDeFabricacao + "; Autonomia: "+autonomia;
   }
 
   public Veiculo() {
@@ -47,3 +53,4 @@ public class Veiculo {
     this.autonomia = autonomia;
   }
 }
+
