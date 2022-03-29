@@ -4,14 +4,14 @@ public class Colaboradores {
 
   private int id;
   private String nome;
-  private Boolean habilitado;
+  private String habilitado;
   private String email;
   private String telefone;
 
   public Colaboradores() {
   }
 
-  public Colaboradores(String nome, Boolean habilitado, String email, String telefone) {
+  public Colaboradores(String nome, String habilitado, String email, String telefone) {
     this.nome = nome;
     this.habilitado = habilitado;
     this.email = email;
@@ -26,11 +26,11 @@ public class Colaboradores {
     this.nome = nome;
   }
 
-  public Boolean getHabilitado() {
+  public String getHabilitado() {
     return habilitado;
   }
 
-  public void setHabilitado(Boolean habilitado) {
+  public void setHabilitado(String habilitado) {
     this.habilitado = habilitado;
   }
 
