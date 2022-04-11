@@ -12,20 +12,15 @@ import javax.swing.text.BadLocationException;
 
 import controller.ColaboradoresController;
 import entidades.Colaboradores;
+import view.tabelas.ColaboradorTableModel;
 
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.AncestorEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.JScrollPane;
 
 public class CadastroColaborador extends JInternalFrame {
 	/**
@@ -35,6 +30,7 @@ public class CadastroColaborador extends JInternalFrame {
 	private JTextField textNome;
 	private JTextField textEmail;
 	private JTextField textTelefone;
+	private JTable tableColab;
 
 	/**
 	 * Launch the application.
@@ -58,7 +54,7 @@ public class CadastroColaborador extends JInternalFrame {
 	public CadastroColaborador() {
 		setClosable(true);
 		setTitle("Cadastro de Colaborador");
-		setBounds(100, 100, 394, 327);
+		setBounds(100, 100, 645, 468);
 
 		JLabel lblNome = new JLabel("Nome: ");
 
@@ -127,65 +123,80 @@ public class CadastroColaborador extends JInternalFrame {
 				dispose();
 			}
 		});
-	
+
+		JScrollPane scrollPane = new JScrollPane();
+
+		JButton btnEditar = new JButton("Editar");
+
+		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Colaboradores colaboradores = new ColaboradorTableModel(new ColaboradoresController().listar())
+						.get(tableColab.getSelectedRow());
+				try {
+					new ColaboradoresController().excluir(colaboradores.getId());
+					tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(22)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNome)
-							.addGap(27)
-							.addComponent(textNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnSalvarColab)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblEmail)
-										.addComponent(lblTelefone)
-										.addComponent(lblHabilitado))
-									.addGap(23)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(textTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(textEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-											.addComponent(btnCancelarColab)
-											.addGroup(groupLayout.createSequentialGroup()
-												.addComponent(rdbtnHabilitadoSim)
-												.addPreferredGap(ComponentPlacement.UNRELATED)
-												.addComponent(rdbtnHabilitadoNao))))))))
-					.addContainerGap(525, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(19)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(textNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(28)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEmail)
-						.addComponent(textEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(21)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblTelefone)
-						.addComponent(textTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblHabilitado)
-						.addComponent(rdbtnHabilitadoSim)
-						.addComponent(rdbtnHabilitadoNao))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnSalvarColab)
-						.addComponent(btnCancelarColab))
-					.addContainerGap(262, Short.MAX_VALUE))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup().addGap(22)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup().addComponent(lblNome).addGap(27).addComponent(
+								textNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup().addComponent(btnSalvarColab)
+												.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnEditar)
+												.addGap(7).addComponent(btnDeletar).addGap(18)
+												.addComponent(btnCancelarColab))
+										.addGroup(groupLayout.createSequentialGroup()
+												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addComponent(lblEmail).addComponent(lblTelefone)
+														.addComponent(lblHabilitado))
+												.addGap(23)
+												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addComponent(textTelefone, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addComponent(textEmail, GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+														.addGroup(groupLayout.createSequentialGroup()
+																.addComponent(rdbtnHabilitadoSim)
+																.addPreferredGap(ComponentPlacement.UNRELATED)
+																.addComponent(rdbtnHabilitadoNao))))
+										.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 578,
+												GroupLayout.PREFERRED_SIZE))))
+				.addContainerGap(29, Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup().addGap(19)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblNome).addComponent(
+						textNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGap(28)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblEmail).addComponent(
+						textEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGap(21)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblTelefone).addComponent(
+						textTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblHabilitado)
+						.addComponent(rdbtnHabilitadoSim).addComponent(rdbtnHabilitadoNao))
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnSalvarColab)
+						.addComponent(btnEditar).addComponent(btnCancelarColab).addComponent(btnDeletar))
+				.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+				.addContainerGap()));
+
+		tableColab = new JTable();
+		tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));
+
+		scrollPane.setViewportView(tableColab);
 		getContentPane().setLayout(groupLayout);
 
 	}
