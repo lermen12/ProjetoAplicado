@@ -9,11 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.text.BadLocationException;
-
 import controller.ColaboradoresController;
 import entidades.Colaboradores;
 import view.tabelas.ColaboradorTableModel;
-
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
@@ -21,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CadastroColaborador extends JInternalFrame {
 	/**
@@ -127,6 +127,36 @@ public class CadastroColaborador extends JInternalFrame {
 		JScrollPane scrollPane = new JScrollPane();
 
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Colaboradores colaboradores = new Colaboradores();
+					colaboradores.setId((Integer) tableColab.getValueAt(tableColab.getSelectedRow(), 0));
+					colaboradores.setNome(textNome.getText());
+					colaboradores.setEmail(textEmail.getText());
+					try {
+						colaboradores.setTelefone(textTelefone.getText(0, 10));
+					} catch (BadLocationException e1) {
+						JOptionPane.showMessageDialog(null, "Telefone invalido", "Erro Telefone",
+								JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+						return;
+					}
+					if (rdbtnHabilitadoNao.isSelected()) {
+						colaboradores.setHabilitado(false);
+					} else {
+						colaboradores.setHabilitado(true);
+					}
+
+					new ColaboradoresController().atualizar(colaboradores);
+					
+					JOptionPane.showMessageDialog(null, "Editado com sucesso!");
+					tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao editar");
+				}
+			}
+		});
 
 		JButton btnDeletar = new JButton("Deletar");
 		btnDeletar.addActionListener(new ActionListener() {
@@ -194,6 +224,14 @@ public class CadastroColaborador extends JInternalFrame {
 				.addContainerGap()));
 
 		tableColab = new JTable();
+		tableColab.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textNome.setText(tableColab.getValueAt(tableColab.getSelectedRow(), 1).toString());
+				textEmail.setText(tableColab.getValueAt(tableColab.getSelectedRow(), 3).toString());
+				textTelefone.setText(tableColab.getValueAt(tableColab.getSelectedRow(), 4).toString());
+			}
+		});
 		tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));
 
 		scrollPane.setViewportView(tableColab);

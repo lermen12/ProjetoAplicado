@@ -3,10 +3,10 @@ package entidades;
 public class Veiculo {
 	private int id;
 	private String modelo;
-	private int anoDeFabricacao;
+	private Integer anoDeFabricacao;
 	private Double autonomia;
 
-	public Veiculo(String modelo, int anoDeFabricacao, Double autonomia) {
+	public Veiculo(String modelo, Integer anoDeFabricacao, Double autonomia) {
 		this.modelo = modelo;
 		this.anoDeFabricacao = anoDeFabricacao;
 		this.autonomia = autonomia;
@@ -36,11 +36,11 @@ public class Veiculo {
 		this.modelo = modelo;
 	}
 
-	public int getAnoDeFabricacao() {
+	public Integer getAnoDeFabricacao() {
 		return anoDeFabricacao;
 	}
 
-	public void setAnoDeFabricacao(int anoDeFabricacao) {
+	public void setAnoDeFabricacao(Integer anoDeFabricacao) {
 		this.anoDeFabricacao = anoDeFabricacao;
 	}
 

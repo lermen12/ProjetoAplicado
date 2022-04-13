@@ -37,7 +37,7 @@ public class ColaboradoresDAO {
 
 	public void atualizar(Colaboradores colaboradores) {
 		try {
-			String sql = "update colaborador set  nome=?,habilitado=?,email=?,telefone=? where id_coloborador=?";
+			String sql = "update colaborador set  nome=?,habilitado=?,email=?,telefone=? where id_colaborador=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, colaboradores.getNome());
 			preparedStatement.setBoolean(2, colaboradores.getHabilitado());

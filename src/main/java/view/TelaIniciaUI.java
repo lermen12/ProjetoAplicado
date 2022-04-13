@@ -80,30 +80,6 @@ public class TelaIniciaUI extends JFrame {
 			}
 		});
 		jmCadastrar.add(jmiCadastroChamado);
-
-		JMenu jmAtualizar = new JMenu("Atualizar");
-		jmbPrincipal.add(jmAtualizar);
-
-		JMenuItem jmiAtualizarColaborador = new JMenuItem("Colaborador");
-		jmAtualizar.add(jmiAtualizarColaborador);
-
-		JMenuItem jmAtualizarVeiculo = new JMenuItem("Ve\u00EDculo");
-		jmAtualizar.add(jmAtualizarVeiculo);
-
-		JMenuItem jmiAtualizarChamado = new JMenuItem("Chamado");
-		jmAtualizar.add(jmiAtualizarChamado);
-
-		JMenu jmListar = new JMenu("Listar");
-		jmbPrincipal.add(jmListar);
-
-		JMenuItem jmiListarColaborador = new JMenuItem("Colaborador");
-		jmListar.add(jmiListarColaborador);
-
-		JMenuItem jmiListarVeiculo = new JMenuItem("Ve\u00EDculo");
-		jmListar.add(jmiListarVeiculo);
-
-		JMenuItem jmiListarChamado = new JMenuItem("Chamado");
-		jmListar.add(jmiListarChamado);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
