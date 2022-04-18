@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CadastroChamado extends JInternalFrame {
+public class ChamadoUI extends JInternalFrame {
 	/**
 	 * 
 	 */
@@ -43,7 +43,7 @@ public class CadastroChamado extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroChamado frame = new CadastroChamado();
+					ChamadoUI frame = new ChamadoUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,7 +55,7 @@ public class CadastroChamado extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroChamado() {
+	public ChamadoUI() {
 		setClosable(true);
 		setBounds(100, 100, 704, 556);
 

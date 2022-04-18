@@ -20,7 +20,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CadastroVeiculo extends JInternalFrame {
+public class VeiculoUI extends JInternalFrame {
 	/**
 	 * 
 	 */
@@ -37,7 +37,7 @@ public class CadastroVeiculo extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroVeiculo frame = new CadastroVeiculo();
+					VeiculoUI frame = new VeiculoUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,9 +49,8 @@ public class CadastroVeiculo extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroVeiculo() {
-		
-		
+	public VeiculoUI() {
+
 		setClosable(true);
 		setBounds(100, 100, 732, 540);
 
@@ -100,13 +99,13 @@ public class CadastroVeiculo extends JInternalFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Veiculo veiculo = new Veiculo();
-				veiculo.setId((Integer)tableVeiculo.getValueAt(tableVeiculo.getSelectedRow(), 0));
+				veiculo.setId((Integer) tableVeiculo.getValueAt(tableVeiculo.getSelectedRow(), 0));
 				veiculo.setModelo(textModelo.getText());
 				veiculo.setAutonomia(Double.parseDouble(textAutonomia.getText()));
 				veiculo.setAnoDeFabricacao(Integer.parseInt(textAnoFab.getText()));
 
 				try {
-					
+
 					new VeiculoController().atualizar(veiculo);
 					JOptionPane.showMessageDialog(null, "Editado com sucesso!");
 					tableVeiculo.setModel(new VeiculoTableModel(new VeiculoController().listar()));
@@ -196,7 +195,6 @@ public class CadastroVeiculo extends JInternalFrame {
 
 		scrollPane.setViewportView(tableVeiculo);
 		getContentPane().setLayout(groupLayout);
-		
 
 	}
 }

@@ -21,7 +21,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CadastroColaborador extends JInternalFrame {
+public class ColaboradorUI extends JInternalFrame {
 	/**
 	 * 
 	 */
@@ -37,7 +37,7 @@ public class CadastroColaborador extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroColaborador frame = new CadastroColaborador();
+					ColaboradorUI frame = new ColaboradorUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class CadastroColaborador extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroColaborador() {
+	public ColaboradorUI() {
 		setClosable(true);
 		setTitle("Cadastro de Colaborador");
 		setBounds(100, 100, 645, 468);
