@@ -22,13 +22,12 @@ public class ColaboradoresDAO {
 
 	public void salvar(Colaboradores colaboradores) {
 		try {
-			String sql = "insert into colaborador (nome,habilitado,email,telefone) values (?, ?, ?, ?)";
+			String sql = "insert into colaborador (nome,habilitado,email,telefone) values (?, ?, ?)";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, colaboradores.getNome());
 			preparedStatement.setBoolean(2, colaboradores.getHabilitado());
 			preparedStatement.setString(3, colaboradores.getEmail());
-			preparedStatement.setString(4, colaboradores.getTelefone());
 			preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -37,12 +36,11 @@ public class ColaboradoresDAO {
 
 	public void atualizar(Colaboradores colaboradores) {
 		try {
-			String sql = "update colaborador set  nome=?,habilitado=?,email=?,telefone=? where id_colaborador=?";
+			String sql = "update colaborador set  nome=?,habilitado=?,email=? where id_colaborador=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, colaboradores.getNome());
 			preparedStatement.setBoolean(2, colaboradores.getHabilitado());
 			preparedStatement.setString(3, colaboradores.getEmail());
-			preparedStatement.setString(4, colaboradores.getTelefone());
 			preparedStatement.setInt(5, colaboradores.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -73,7 +71,6 @@ public class ColaboradoresDAO {
 				colaboradores.setNome(resultSet.getString("nome"));
 				colaboradores.setHabilitado(resultSet.getBoolean("habilitado"));
 				colaboradores.setEmail(resultSet.getString("email"));
-				colaboradores.setTelefone(resultSet.getString("telefone"));
 				colaboradoresList.add(colaboradores);
 			}
 		} catch (SQLException e) {

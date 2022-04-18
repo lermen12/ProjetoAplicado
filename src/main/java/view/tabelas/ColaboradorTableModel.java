@@ -16,7 +16,6 @@ public class ColaboradorTableModel extends AbstractTableModel {
 	private static final int COL_NOME = 1;
 	private static final int COL_HABILITADO = 2;
 	private static final int COL_EMAIL = 3;
-	private static final int COL_TELEFONE = 4;
 
 	private List<Colaboradores> valoresColaboradores;
 
@@ -33,7 +32,7 @@ public class ColaboradorTableModel extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 5;
+		return 4;
 	}
 
 	@Override
@@ -48,8 +47,6 @@ public class ColaboradorTableModel extends AbstractTableModel {
 			return colaboradores.getHabilitado();
 		else if (columnIndex == COL_EMAIL)
 			return colaboradores.getEmail();
-		else if (columnIndex == COL_TELEFONE)
-			return colaboradores.getTelefone();
 		return "";
 	}
 
@@ -65,8 +62,6 @@ public class ColaboradorTableModel extends AbstractTableModel {
 			colaboradores.setHabilitado(Boolean.parseBoolean(aValue.toString()));
 		else if (columnIndex == COL_EMAIL)
 			colaboradores.setEmail(aValue.toString());
-		else if (columnIndex == COL_TELEFONE)
-			colaboradores.setTelefone(aValue.toString());
 
 	}
 
@@ -79,8 +74,6 @@ public class ColaboradorTableModel extends AbstractTableModel {
 			return "Habilitado";
 		if (column == COL_EMAIL)
 			return "E-mail";
-		if (column == COL_TELEFONE)
-			return "Telefone";
 		return "";
 
 	}

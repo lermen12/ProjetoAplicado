@@ -4,7 +4,6 @@ import entidades.Chamado;
 import entidades.Colaboradores;
 import entidades.Veiculo;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,11 +24,9 @@ public class ChamadoDAO {
 
 	public void salvar(Chamado chamado) {
 		try {
-			String sql = "insert into chamada (data, cliente,endereco, distancia,colaborador_id_colaborador,veiculo_id_veiculo) values (?, ?, ?, ?, ? ,?)";
+			String sql = "insert into chamada (data, cliente, distancia,colaborador_id_colaborador,veiculo_id_veiculo) values (?, ?, ?, ? ,?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setDate(1,  new Date(chamado.getData().getTime()));
 			preparedStatement.setString(2, chamado.getCliente());
-			preparedStatement.setString(3, chamado.getEndereco());
 			preparedStatement.setDouble(4, chamado.getDistancia());
 			preparedStatement.setInt(5, chamado.getColaboradores().getId());
 			preparedStatement.setInt(6, chamado.getVeiculo().getId());
@@ -41,11 +38,9 @@ public class ChamadoDAO {
 
 	public void atualizar(Chamado chamado) {
 		try {
-			String sql = "update chamada set  data = ?, cliente=?,endereco=?, distancia,colaborador_id_colaborador=?,veiculo_id_veiculo=? where id_chamado=?";
+			String sql = "update chamada set  data = ?, cliente=?, distancia,colaborador_id_colaborador=?,veiculo_id_veiculo=? where id_chamado=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setDate(1,  new Date(chamado.getData().getTime()));
 			preparedStatement.setString(2, chamado.getCliente());
-			preparedStatement.setString(3, chamado.getEndereco());
 			preparedStatement.setDouble(4, chamado.getDistancia());
 			preparedStatement.setInt(5, chamado.getColaboradores().getId());
 			preparedStatement.setInt(6, chamado.getVeiculo().getId());
@@ -76,9 +71,7 @@ public class ChamadoDAO {
 			while (resultSet.next()) {
 				Chamado chamado = new Chamado();
 				chamado.setId(resultSet.getInt("id_chamado"));
-				chamado.setData(resultSet.getDate("data"));
 				chamado.setCliente(resultSet.getString("cliente"));
-				chamado.setEndereco(resultSet.getString("endereco"));
 				chamado.setDistancia(resultSet.getDouble("distancia"));
 				chamado.setColaboradores(new Colaboradores());
 				chamado.getColaboradores().setId(resultSet.getInt("colaborador_id_colaborador"));

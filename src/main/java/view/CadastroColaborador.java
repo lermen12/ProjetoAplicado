@@ -8,7 +8,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.text.BadLocationException;
 import controller.ColaboradoresController;
 import entidades.Colaboradores;
 import view.tabelas.ColaboradorTableModel;
@@ -29,7 +28,6 @@ public class CadastroColaborador extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField textNome;
 	private JTextField textEmail;
-	private JTextField textTelefone;
 	private JTable tableColab;
 
 	/**
@@ -60,8 +58,6 @@ public class CadastroColaborador extends JInternalFrame {
 
 		JLabel lblEmail = new JLabel("E-mail: ");
 
-		JLabel lblTelefone = new JLabel("Telefone: ");
-
 		JLabel lblHabilitado = new JLabel("Habilitado:");
 
 		textNome = new JTextField();
@@ -69,9 +65,6 @@ public class CadastroColaborador extends JInternalFrame {
 
 		textEmail = new JTextField();
 		textEmail.setColumns(10);
-
-		textTelefone = new JTextField();
-		textTelefone.setColumns(10);
 
 		JRadioButton rdbtnHabilitadoSim = new JRadioButton("Sim");
 
@@ -94,14 +87,7 @@ public class CadastroColaborador extends JInternalFrame {
 					Colaboradores colaboradores = new Colaboradores();
 					colaboradores.setNome(textNome.getText());
 					colaboradores.setEmail(textEmail.getText());
-					try {
-						colaboradores.setTelefone(textTelefone.getText(0, 10));
-					} catch (BadLocationException e1) {
-						JOptionPane.showMessageDialog(null, "Telefone invalido", "Erro Telefone",
-								JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
-						return;
-					}
+
 					if (rdbtnHabilitadoNao.isSelected()) {
 						colaboradores.setHabilitado(false);
 					} else {
@@ -134,14 +120,6 @@ public class CadastroColaborador extends JInternalFrame {
 					colaboradores.setId((Integer) tableColab.getValueAt(tableColab.getSelectedRow(), 0));
 					colaboradores.setNome(textNome.getText());
 					colaboradores.setEmail(textEmail.getText());
-					try {
-						colaboradores.setTelefone(textTelefone.getText(0, 10));
-					} catch (BadLocationException e1) {
-						JOptionPane.showMessageDialog(null, "Telefone invalido", "Erro Telefone",
-								JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
-						return;
-					}
 					if (rdbtnHabilitadoNao.isSelected()) {
 						colaboradores.setHabilitado(false);
 					} else {
@@ -149,7 +127,7 @@ public class CadastroColaborador extends JInternalFrame {
 					}
 
 					new ColaboradoresController().atualizar(colaboradores);
-					
+
 					JOptionPane.showMessageDialog(null, "Editado com sucesso!");
 					tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));
 				} catch (Exception e1) {
@@ -188,12 +166,9 @@ public class CadastroColaborador extends JInternalFrame {
 												.addComponent(btnCancelarColab))
 										.addGroup(groupLayout.createSequentialGroup()
 												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-														.addComponent(lblEmail).addComponent(lblTelefone)
-														.addComponent(lblHabilitado))
+														.addComponent(lblEmail).addComponent(lblHabilitado))
 												.addGap(23)
 												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-														.addComponent(textTelefone, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 														.addComponent(textEmail, GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 														.addGroup(groupLayout.createSequentialGroup()
@@ -210,10 +185,7 @@ public class CadastroColaborador extends JInternalFrame {
 				.addGap(28)
 				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblEmail).addComponent(
 						textEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(21)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblTelefone).addComponent(
-						textTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addGap(42)
 				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblHabilitado)
 						.addComponent(rdbtnHabilitadoSim).addComponent(rdbtnHabilitadoNao))
 				.addGap(18)
@@ -229,7 +201,6 @@ public class CadastroColaborador extends JInternalFrame {
 			public void mouseClicked(MouseEvent e) {
 				textNome.setText(tableColab.getValueAt(tableColab.getSelectedRow(), 1).toString());
 				textEmail.setText(tableColab.getValueAt(tableColab.getSelectedRow(), 3).toString());
-				textTelefone.setText(tableColab.getValueAt(tableColab.getSelectedRow(), 4).toString());
 			}
 		});
 		tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));

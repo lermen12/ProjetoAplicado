@@ -7,14 +7,14 @@ import java.util.List;
 public class ChamadoController {
 
 	public void salvar(Chamado chamado) throws Exception {
-		if (chamado.getEndereco() == null && chamado.getCliente() == null && chamado.getDistancia() == null)
+		if (chamado.getCliente() == null && chamado.getDistancia() == null)
 			throw new Exception("Campos inválidos!");
 		ChamadoDAO.getInstance().salvar(chamado);
 
 	}
 
 	public void atualizar(Chamado chamado) throws Exception {
-		if (chamado.getEndereco() == null && chamado.getCliente() == null && chamado.getDistancia() == null)
+		if (chamado.getCliente() == null && chamado.getDistancia() == null)
 			throw new Exception("Campos inválidos!");
 		ChamadoDAO.getInstance().atualizar(chamado);
 

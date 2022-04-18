@@ -15,7 +15,6 @@ public class VeiculoTableModel extends AbstractTableModel {
 	private static final int COL_MODELO = 1;
 	private static final int COL_ANO_DE_FAB = 2;
 	private static final int COL_AUTONOMIA = 3;
-	
 
 	private List<Veiculo> valores;
 
@@ -62,7 +61,6 @@ public class VeiculoTableModel extends AbstractTableModel {
 			veiculo.setAnoDeFabricacao(Integer.parseInt(aValue.toString()));
 		else if (columnIndex == COL_AUTONOMIA)
 			veiculo.setAutonomia(Double.parseDouble(aValue.toString()));
-
 
 	}
 

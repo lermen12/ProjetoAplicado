@@ -6,16 +6,14 @@ public class Colaboradores {
 	private String nome;
 	private Boolean habilitado;
 	private String email;
-	private String telefone;
 
 	public Colaboradores() {
 	}
 
-	public Colaboradores(String nome, Boolean habilitado, String email, String telefone) {
+	public Colaboradores(String nome, Boolean habilitado, String email) {
 		this.nome = nome;
 		this.habilitado = habilitado;
 		this.email = email;
-		this.telefone = telefone;
 	}
 
 	public String getNome() {
@@ -40,14 +38,6 @@ public class Colaboradores {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
 	}
 
 	public int getId() {

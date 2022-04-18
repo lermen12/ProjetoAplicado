@@ -15,29 +15,26 @@ import controller.ChamadoController;
 import entidades.Chamado;
 import entidades.Colaboradores;
 import entidades.Veiculo;
-
+import view.tabelas.ChamadoTableModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CadastroChamado extends JInternalFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-
-	private JTextField textData;
 	private JTextField textCliente;
-	private JTextField textEndereco;
 	private JTextField textDistancia;
+	private JTable tableChamado;
 
 	/**
 	 * Launch the application.
@@ -60,29 +57,18 @@ public class CadastroChamado extends JInternalFrame {
 	 */
 	public CadastroChamado() {
 		setClosable(true);
-		setBounds(100, 100, 450, 300);
-
-		JLabel lblData = new JLabel("Data ");
-		lblData.setToolTipText("");
+		setBounds(100, 100, 704, 556);
 
 		JLabel lblCliente = new JLabel("Cliente");
-
-		JLabel lblEndereco = new JLabel("Endereço");
 
 		JLabel lblDistancia = new JLabel("Distância");
 
 		JLabel lblColab = new JLabel("Colaborador");
 
 		JLabel lblVeiculo = new JLabel("Veículo");
-		Date data=new Date();
-		textData = new JTextField(formato.format(data));
-		textData.setColumns(10);
 
 		textCliente = new JTextField();
 		textCliente.setColumns(10);
-
-		textEndereco = new JTextField();
-		textEndereco.setColumns(10);
 
 		textDistancia = new JTextField();
 		textDistancia.setColumns(10);
@@ -135,14 +121,7 @@ public class CadastroChamado extends JInternalFrame {
 				Colaboradores colaboradores = new Colaboradores();
 				Veiculo veiculo = new Veiculo();
 
-				try {
-					chamado.setData(formato.parse(textData.getText()));
-				} catch (ParseException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
 				chamado.setCliente(textCliente.getText());
-				chamado.setEndereco(textEndereco.getText());
 				chamado.setDistancia(Double.parseDouble(textDistancia.getText()));
 				colaboradores = (Colaboradores) cbColab.getSelectedItem();
 				chamado.setColaboradores(colaboradores);
@@ -167,68 +146,70 @@ public class CadastroChamado extends JInternalFrame {
 			}
 		});
 
+		JButton btnEditar = new JButton("Editar");
+
+		JButton btnDeletar = new JButton("Deletar");
+
+		JScrollPane scrollPane = new JScrollPane();
+
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-				.createSequentialGroup().addContainerGap(29, Short.MAX_VALUE)
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-						.createSequentialGroup()
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup().addComponent(lblEndereco)
-										.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addComponent(textEndereco, GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblData).addComponent(lblCliente))
-										.addGap(100)
+				.createSequentialGroup().addContainerGap()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(lblColab)
+						.addGroup(groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(lblCliente)
+										.addComponent(lblDistancia).addComponent(lblVeiculo))
+								.addGap(90)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(cbVeiculo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
 										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-												.addComponent(textData, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 												.addComponent(textCliente, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(groupLayout.createSequentialGroup()
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblDistancia).addComponent(lblColab)
-												.addComponent(lblVeiculo))
-										.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(cbColab, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(cbVeiculo, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 												.addComponent(textDistancia, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addComponent(cbColab, Alignment.LEADING, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-						.addGap(230))
-						.addGroup(groupLayout.createSequentialGroup().addComponent(btnSalvar).addGap(32)
-								.addComponent(btnCancelar).addGap(77)))));
+						.addGroup(groupLayout.createSequentialGroup().addComponent(btnSalvar)
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnEditar)
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnDeletar).addGap(18)
+								.addComponent(btnCancelar))
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 654, GroupLayout.PREFERRED_SIZE))
+				.addContainerGap(33, Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addGap(19)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblData).addComponent(
-						textData, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.createSequentialGroup().addGap(50)
 				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblCliente).addComponent(
 						textCliente, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblEndereco).addComponent(
-						textEndereco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(11)
-				.addGroup(groupLayout
-						.createParallelGroup(Alignment.BASELINE).addComponent(lblDistancia).addComponent(textDistancia,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(16)
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblColab)
-										.addComponent(cbColab, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(lblVeiculo))
-						.addGroup(groupLayout.createSequentialGroup().addGap(28).addComponent(cbVeiculo,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-				.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE).addGroup(groupLayout
-						.createParallelGroup(Alignment.BASELINE).addComponent(btnSalvar).addComponent(btnCancelar))
-				.addContainerGap()));
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(textDistancia, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDistancia))
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblColab).addComponent(
+						cbColab, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblVeiculo).addComponent(
+						cbVeiculo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGap(33)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnSalvar)
+						.addComponent(btnEditar).addComponent(btnDeletar).addComponent(btnCancelar))
+				.addGap(27).addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)
+				.addContainerGap(135, Short.MAX_VALUE)));
+
+		tableChamado = new JTable();
+		tableChamado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				textCliente.setText(tableChamado.getValueAt(tableChamado.getSelectedRow(), 1).toString());
+				textDistancia.setText(tableChamado.getValueAt(tableChamado.getSelectedRow(), 2).toString());
+			}
+		});
+		scrollPane.setViewportView(tableChamado);
 		getContentPane().setLayout(groupLayout);
 
+		tableChamado.setModel(new ChamadoTableModel(new ChamadoController().listar()));
+
 	}
+
 }
