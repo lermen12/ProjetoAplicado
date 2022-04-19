@@ -24,12 +24,12 @@ public class ChamadoDAO {
 
 	public void salvar(Chamado chamado) {
 		try {
-			String sql = "insert into chamada (data, cliente, distancia,colaborador_id_colaborador,veiculo_id_veiculo) values (?, ?, ?, ? ,?)";
+			String sql = "insert into chamada (cliente, distancia,colaborador_id_colaborador,veiculo_id_veiculo) values (?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(2, chamado.getCliente());
-			preparedStatement.setDouble(4, chamado.getDistancia());
-			preparedStatement.setInt(5, chamado.getColaboradores().getId());
-			preparedStatement.setInt(6, chamado.getVeiculo().getId());
+			preparedStatement.setString(1, chamado.getCliente());
+			preparedStatement.setDouble(2, chamado.getDistancia());
+			preparedStatement.setInt(3, chamado.getColaboradores().getId());
+			preparedStatement.setInt(4, chamado.getVeiculo().getId());
 			preparedStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -38,13 +38,13 @@ public class ChamadoDAO {
 
 	public void atualizar(Chamado chamado) {
 		try {
-			String sql = "update chamada set  data = ?, cliente=?, distancia,colaborador_id_colaborador=?,veiculo_id_veiculo=? where id_chamado=?";
+			String sql = "update chamada set  cliente=?, distancia=?,colaborador_id_colaborador=?,veiculo_id_veiculo=? where id_chamado=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(2, chamado.getCliente());
-			preparedStatement.setDouble(4, chamado.getDistancia());
-			preparedStatement.setInt(5, chamado.getColaboradores().getId());
-			preparedStatement.setInt(6, chamado.getVeiculo().getId());
-			preparedStatement.setInt(7, chamado.getId());
+			preparedStatement.setString(1, chamado.getCliente());
+			preparedStatement.setDouble(2, chamado.getDistancia());
+			preparedStatement.setInt(3, chamado.getColaboradores().getId());
+			preparedStatement.setInt(4, chamado.getVeiculo().getId());
+			preparedStatement.setInt(5, chamado.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

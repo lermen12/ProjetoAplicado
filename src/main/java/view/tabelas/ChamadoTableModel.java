@@ -12,9 +12,10 @@ public class ChamadoTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final int COL_CODIGO = 0;
-	private static final int COL_DISTANCIA = 1;
-	private static final int COL_COLABORADOR = 2;
-	private static final int COL_VEICULO = 3;
+	private static final int COL_CLIENTE = 1;
+	private static final int COL_DISTANCIA = 2;
+	private static final int COL_COLABORADOR = 3;
+	private static final int COL_VEICULO = 4;
 
 	private List<Chamado> valores;
 
@@ -31,7 +32,7 @@ public class ChamadoTableModel extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 4;
+		return 5;
 	}
 
 	@Override
@@ -40,12 +41,14 @@ public class ChamadoTableModel extends AbstractTableModel {
 		Chamado chamado = valores.get(rowIndex);
 		if (columnIndex == COL_CODIGO)
 			return chamado.getId();
+		else if (columnIndex == COL_CLIENTE)
+			return chamado.getCliente();
 		else if (columnIndex == COL_DISTANCIA)
 			return chamado.getDistancia();
 		else if (columnIndex == COL_COLABORADOR)
-			return chamado.getColaboradores();
+			return chamado.getColaboradores().getId();
 		else if (columnIndex == COL_VEICULO)
-			return chamado.getVeiculo();
+			return chamado.getVeiculo().getId();
 		return "";
 	}
 
@@ -55,6 +58,8 @@ public class ChamadoTableModel extends AbstractTableModel {
 		Chamado chamado = valores.get(rowIndex);
 		if (columnIndex == COL_CODIGO)
 			chamado.setId(Integer.parseInt(aValue.toString()));
+		else if (columnIndex == COL_CLIENTE)
+			chamado.setCliente(aValue.toString());
 		else if (columnIndex == COL_DISTANCIA)
 			chamado.setDistancia(Double.parseDouble(aValue.toString()));
 		else if (columnIndex == COL_COLABORADOR)
@@ -67,6 +72,8 @@ public class ChamadoTableModel extends AbstractTableModel {
 	public String getColumnNameString(int column) {
 		if (column == COL_CODIGO)
 			return "Código";
+		if (column == COL_CLIENTE)
+			return "Cliente";		
 		if (column == COL_DISTANCIA)
 			return "Distância";
 		if (column == COL_COLABORADOR)

@@ -51,7 +51,7 @@ public class ColaboradorUI extends JInternalFrame {
 	 */
 	public ColaboradorUI() {
 		setClosable(true);
-		setTitle("Cadastro de Colaborador");
+		setTitle("Colaborador");
 		setBounds(100, 100, 645, 468);
 
 		JLabel lblNome = new JLabel("Nome: ");
@@ -96,7 +96,7 @@ public class ColaboradorUI extends JInternalFrame {
 
 					new ColaboradoresController().salvar(colaboradores);
 					JOptionPane.showMessageDialog(null, "Colaborador Salvo");
-					dispose();
+					tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Erro ao Salvar o Colaborador");
 				}
@@ -112,8 +112,8 @@ public class ColaboradorUI extends JInternalFrame {
 
 		JScrollPane scrollPane = new JScrollPane();
 
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
+		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Colaboradores colaboradores = new Colaboradores();
@@ -128,10 +128,10 @@ public class ColaboradorUI extends JInternalFrame {
 
 					new ColaboradoresController().atualizar(colaboradores);
 
-					JOptionPane.showMessageDialog(null, "Editado com sucesso!");
+					JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
 					tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao editar");
+					JOptionPane.showMessageDialog(null, "Erro ao Atualizar");
 				}
 			}
 		});
@@ -145,8 +145,7 @@ public class ColaboradorUI extends JInternalFrame {
 					new ColaboradoresController().excluir(colaboradores.getId());
 					tableColab.setModel(new ColaboradorTableModel(new ColaboradoresController().listar()));
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Erro ao Deletar");
 				}
 			}
 		});
@@ -161,7 +160,7 @@ public class ColaboradorUI extends JInternalFrame {
 						.addGroup(groupLayout.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createSequentialGroup().addComponent(btnSalvarColab)
-												.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnEditar)
+												.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnAtualizar)
 												.addGap(7).addComponent(btnDeletar).addGap(18)
 												.addComponent(btnCancelarColab))
 										.addGroup(groupLayout.createSequentialGroup()
@@ -190,7 +189,7 @@ public class ColaboradorUI extends JInternalFrame {
 						.addComponent(rdbtnHabilitadoSim).addComponent(rdbtnHabilitadoNao))
 				.addGap(18)
 				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnSalvarColab)
-						.addComponent(btnEditar).addComponent(btnCancelarColab).addComponent(btnDeletar))
+						.addComponent(btnAtualizar).addComponent(btnCancelarColab).addComponent(btnDeletar))
 				.addPreferredGap(ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
 				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
 				.addContainerGap()));

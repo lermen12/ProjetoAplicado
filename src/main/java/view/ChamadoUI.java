@@ -56,6 +56,7 @@ public class ChamadoUI extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ChamadoUI() {
+		setTitle("Chamado");
 		setClosable(true);
 		setBounds(100, 100, 704, 556);
 
@@ -130,7 +131,7 @@ public class ChamadoUI extends JInternalFrame {
 				try {
 					new ChamadoController().salvar(chamado);
 					JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
-					dispose();
+					tableChamado.setModel(new ChamadoTableModel(new ChamadoController().listar()));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Erro ao Salvar!");
@@ -146,9 +147,45 @@ public class ChamadoUI extends JInternalFrame {
 			}
 		});
 
-		JButton btnEditar = new JButton("Editar");
+		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Colaboradores colaboradores = new Colaboradores();
+					Veiculo veiculo = new Veiculo();
+					Chamado chamado = new Chamado();
+					chamado.setId((Integer) tableChamado.getValueAt(tableChamado.getSelectedRow(), 0));
+					chamado.setCliente(textCliente.getText());
+					chamado.setDistancia(Double.parseDouble(textDistancia.getText()));
+					colaboradores = (Colaboradores) cbColab.getSelectedItem();
+					chamado.setColaboradores(colaboradores);
+					veiculo = (Veiculo) cbVeiculo.getSelectedItem();
+					chamado.setVeiculo(veiculo);
+
+					new ChamadoController().atualizar(chamado);
+					JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+					tableChamado.setModel(new ChamadoTableModel(new ChamadoController().listar()));
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao Atualizar");
+				}
+
+			}
+		});
 
 		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Chamado chamado = new ChamadoTableModel(new ChamadoController().listar())
+						.get(tableChamado.getSelectedRow());
+
+				try {
+					new ChamadoController().excluir(chamado.getId());
+					tableChamado.setModel(new ChamadoTableModel(new ChamadoController().listar()));
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao Deletar");
+				}
+			}
+		});
 
 		JScrollPane scrollPane = new JScrollPane();
 
@@ -171,7 +208,7 @@ public class ChamadoUI extends JInternalFrame {
 												.addComponent(cbColab, Alignment.LEADING, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup().addComponent(btnSalvar)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnEditar)
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnAtualizar)
 								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnDeletar).addGap(18)
 								.addComponent(btnCancelar))
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 654, GroupLayout.PREFERRED_SIZE))
@@ -193,7 +230,7 @@ public class ChamadoUI extends JInternalFrame {
 						cbVeiculo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 				.addGap(33)
 				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnSalvar)
-						.addComponent(btnEditar).addComponent(btnDeletar).addComponent(btnCancelar))
+						.addComponent(btnAtualizar).addComponent(btnDeletar).addComponent(btnCancelar))
 				.addGap(27).addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)
 				.addContainerGap(135, Short.MAX_VALUE)));
 
@@ -203,6 +240,8 @@ public class ChamadoUI extends JInternalFrame {
 			public void mouseClicked(MouseEvent e) {
 				textCliente.setText(tableChamado.getValueAt(tableChamado.getSelectedRow(), 1).toString());
 				textDistancia.setText(tableChamado.getValueAt(tableChamado.getSelectedRow(), 2).toString());
+				
+
 			}
 		});
 		scrollPane.setViewportView(tableChamado);

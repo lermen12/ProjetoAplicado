@@ -22,7 +22,7 @@ public class ColaboradoresDAO {
 
 	public void salvar(Colaboradores colaboradores) {
 		try {
-			String sql = "insert into colaborador (nome,habilitado,email,telefone) values (?, ?, ?)";
+			String sql = "insert into colaborador (nome,habilitado,email) values (?, ?, ?)";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, colaboradores.getNome());
@@ -41,7 +41,7 @@ public class ColaboradoresDAO {
 			preparedStatement.setString(1, colaboradores.getNome());
 			preparedStatement.setBoolean(2, colaboradores.getHabilitado());
 			preparedStatement.setString(3, colaboradores.getEmail());
-			preparedStatement.setInt(5, colaboradores.getId());
+			preparedStatement.setInt(4, colaboradores.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

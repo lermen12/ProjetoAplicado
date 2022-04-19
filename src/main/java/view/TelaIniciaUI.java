@@ -10,6 +10,7 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class TelaIniciaUI extends JFrame {
 
@@ -41,7 +42,7 @@ public class TelaIniciaUI extends JFrame {
 	public TelaIniciaUI() {
 		setTitle("Sistema Pegada de Carbono");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 636, 421);
+		setBounds(100, 100, 1001, 751);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -73,16 +74,27 @@ public class TelaIniciaUI extends JFrame {
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(140).addComponent(btnColab).addGap(28)
-						.addComponent(btnVeiculo).addGap(48).addComponent(btnChamado)
-						.addContainerGap(468, Short.MAX_VALUE)));
-		gl_contentPane
-				.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
-						gl_contentPane.createSequentialGroup().addGap(260)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(btnColab)
-										.addComponent(btnVeiculo).addComponent(btnChamado))
-								.addContainerGap(205, Short.MAX_VALUE)));
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(180)
+					.addComponent(btnColab)
+					.addGap(171)
+					.addComponent(btnVeiculo)
+					.addPreferredGap(ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+					.addComponent(btnChamado)
+					.addGap(201))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap(580, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnColab)
+						.addComponent(btnChamado)
+						.addComponent(btnVeiculo))
+					.addGap(99))
+		);
 		contentPane.setLayout(gl_contentPane);
 	}
 }
